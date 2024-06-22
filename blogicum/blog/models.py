@@ -12,7 +12,10 @@ class PublishedModel(models.Model):
             'Снимите галочку, чтобы скрыть публикацию.'
         )
     )
-    created_at = models.DateTimeField('Добавлено')
+    created_at = models.DateTimeField(
+        'Добавлено',
+        auto_now_add=True
+    )
 
     class Meta:
         abstract = True
@@ -68,12 +71,14 @@ class Post(PublishedModel):
         Location,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        verbose_name='Местоположение'
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
+        verbose_name='Категория'
     )
 
     class Meta(PublishedModel.Meta):

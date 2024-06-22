@@ -12,7 +12,7 @@ def index(request):
         is_published=True,
         pub_date__lt=now(),
         category__is_published=True,
-    )
+    )[:5]
     return render(request, 'blog/index.html', {'post_list': post_list})
 
 
