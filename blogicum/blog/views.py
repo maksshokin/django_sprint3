@@ -21,12 +21,12 @@ def post_detail(request, id):
         Post.objects.select_related(
             'author', 'category', 'location'
         ).filter(
-            is_published=True,
-            pub_date__lt=now(),
-            category__is_published=True,
+        is_published=True,
+        pub_date__lt=now(),
+        category__is_published=True,
         ),
-        id = id
-        )
+        id=id
+    )
     return render(request, 'blog/detail.html', {'post': post})
 
 
