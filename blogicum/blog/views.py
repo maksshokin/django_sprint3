@@ -9,9 +9,9 @@ def index(request):
         'location',
         'category'
     ).filter(
-    is_published=True,
-    pub_date__lt=now(),
-    category__is_published=True,
+        is_published=True,
+        pub_date__lt=now(),
+        category__is_published=True,
     )
     return render(request, 'blog/index.html', {'post_list': post_list})
 
@@ -21,9 +21,9 @@ def post_detail(request, id):
         Post.objects.select_related(
             'author', 'category', 'location'
         ).filter(
-        is_published=True,
-        pub_date__lt=now(),
-        category__is_published=True,
+            is_published=True,
+            pub_date__lt=now(),
+            category__is_published=True,
         ),
         id=id
     )

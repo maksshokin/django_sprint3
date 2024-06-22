@@ -43,7 +43,7 @@ class Location(PublishedModel):
 
     def __str__(self):
         return self.name
-    
+
     class Meta(PublishedModel.Meta):
         verbose_name_plural = 'Местоположения'
         verbose_name = 'местоположение'
