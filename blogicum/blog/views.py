@@ -1,32 +1,36 @@
 from django.shortcuts import get_object_or_404, render
 from blog.models import Post, Category
 from django.utils.timezone import now
+from django.conf import settings
 
 
-def index(request):
-    post_list = Post.objects.select_related(
-        'author',
-        'location',
-        'category'
-    ).filter(
+def filter_queryset(posts):
+    return posts.filter(
         is_published=True,
         pub_date__lt=now(),
         category__is_published=True,
-    )[:5]
+        )
+
+def index(request):
+    post_list = filter_queryset(
+            Post.objects.select_related(
+                'author',
+                'location',
+                'category'
+            )
+        )[:settings.POST_COUNT]
     return render(request, 'blog/index.html', {'post_list': post_list})
 
 
 def post_detail(request, id):
     post = get_object_or_404(
-        Post.objects.select_related(
-            'author', 'category', 'location'
-        ).filter(
-            is_published=True,
-            pub_date__lt=now(),
-            category__is_published=True,
+        filter_queryset(
+            Post.objects.select_related(
+                'author', 'category', 'location'
+            )
         ),
         id=id
-    )
+        )
     return render(request, 'blog/detail.html', {'post': post})
 
 
