@@ -9,16 +9,17 @@ def filter_queryset(posts):
         is_published=True,
         pub_date__lt=now(),
         category__is_published=True,
-        )
+    )
+
 
 def index(request):
     post_list = filter_queryset(
-            Post.objects.select_related(
-                'author',
-                'location',
-                'category'
-            )
-        )[:settings.POST_COUNT]
+        Post.objects.select_related(
+            'author',
+            'location',
+            'category'
+        )
+    )[:settings.POST_COUNT]
     return render(request, 'blog/index.html', {'post_list': post_list})
 
 
@@ -30,7 +31,7 @@ def post_detail(request, id):
             )
         ),
         id=id
-        )
+    )
     return render(request, 'blog/detail.html', {'post': post})
 
 
